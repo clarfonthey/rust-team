@@ -3,7 +3,7 @@ use crate::api::zulip::ZulipApi;
 use crate::data::Data;
 use crate::schema::{
     Bot, BypassApp, Email, MergeQueueMethod, Pages, Permissions, Repo, RepoPermission, Team,
-    TeamKind, TeamPeople, ZulipMember,
+    TeamKind, TeamPeople, TeamPermission, ZulipMember,
 };
 use anyhow::{Context as _, Error, bail};
 use log::{error, warn};
@@ -1521,15 +1521,28 @@ fn validate_member_roles(data: &Data, errors: &mut Vec<String>) {
 fn validate_admin_access(data: &Data, errors: &mut Vec<String>) {
     wrapper(data.all_repos(), errors, |repo, errors| {
         wrapper(repo.access.teams.iter(), errors, |(team, permission), _| {
-            if let RepoPermission::Admin = permission {
-                bail!(
-                    "Repository {}/{} uses `admin` permission for team `{team}`",
-                    repo.org,
-                    repo.name
-                );
-            } else {
-                Ok(())
+            match permission {
+                TeamPermission::Unified(RepoPermission::Admin) => {
+                    bail!(
+                        "Repository {}/{} uses `admin` permission for team `{team}`",
+                        repo.org,
+                        repo.name
+                    );
+                }
+                TeamPermission::PerRole(roles) => {
+                    for (role, permission) in roles.iter() {
+                        if let RepoPermission::Admin = permission {
+                            bail!(
+                                "Repository {}/{} uses `admin` permission for role `{role}` of team `{team}`",
+                                repo.org,
+                                repo.name
+                            );
+                        }
+                    }
+                }
+                _ => (),
             }
+            Ok(())
         });
         wrapper(
             repo.access.individuals.iter(),

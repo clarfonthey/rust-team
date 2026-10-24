@@ -1,5 +1,5 @@
 use crate::data::Data;
-use crate::schema;
+use crate::schema::{self, TeamPermission};
 use crate::schema::{Bot, BypassApp, Email, Permissions, RepoPermission, TeamKind, ZulipMember};
 use anyhow::{Context as _, Error, ensure};
 use indexmap::IndexMap;
@@ -14,6 +14,15 @@ use std::path::Path;
 pub(crate) struct Generator<'a> {
     dest: &'a Path,
     data: &'a Data,
+}
+
+fn v1_permission(permission: RolePermission) -> vi::RolePermission {
+    match permission {
+        RepoPermission::Admin => v1::RepoPermission::Admin,
+        RepoPermission::Write => v1::RepoPermission::Write,
+        RepoPermission::Maintain => v1::RepoPermission::Maintain,
+        RepoPermission::Triage => v1::RepoPermission::Triage,
+    }
 }
 
 impl<'a> Generator<'a> {
@@ -120,27 +129,49 @@ impl<'a> Generator<'a> {
                 teams: {
                     let mut teams = Vec::new();
                     for (team_name, permission) in &r.access.teams {
-                        let permission = match permission {
-                            RepoPermission::Admin => v1::RepoPermission::Admin,
-                            RepoPermission::Write => v1::RepoPermission::Write,
-                            RepoPermission::Maintain => v1::RepoPermission::Maintain,
-                            RepoPermission::Triage => v1::RepoPermission::Triage,
-                        };
+                        match permission {
+                            TeamPermission::Unified(permission) => {
+                                let permission = v1_permission(permission);
 
-                        // Look up the team by name and get all its GitHub teams
-                        let team = self.data.team(team_name).with_context(|| {
-                            format!("failed to find team '{team_name}' in teams directory")
-                        })?;
-                        let github_teams = team.github_teams(self.data).with_context(|| {
-                            format!("failed to get GitHub teams for '{team_name}'")
-                        })?;
-                        for gh_team in github_teams {
-                            if gh_team.org == r.org {
-                                let new_team = v1::RepoTeam {
-                                    name: gh_team.name.to_string(),
-                                    permission: permission.clone(),
-                                };
-                                teams.push(new_team);
+                                // Look up the team by name and get all its GitHub teams
+                                let team = self.data.team(team_name).with_context(|| {
+                                    format!("failed to find team '{team_name}' in teams directory")
+                                })?;
+                                let github_teams = team.github_teams(self.data).with_context(|| {
+                                    format!("failed to get GitHub teams for '{team_name}'")
+                                })?;
+                                for gh_team in github_teams {
+                                    if gh_team.org == r.org {
+                                        let new_team = v1::RepoTeam {
+                                            name: gh_team.name.to_string(),
+                                            role: None,
+                                            permission: permission.clone(),
+                                        };
+                                        teams.push(new_team);
+                                    }
+                                }
+                            }
+                            TeamPermission::PerRole(roles) => {
+                                for (role_name, permission) in roles {
+                                    let permission = v1_permission(permission);
+
+                                    // Look up the team by name and get all its GitHub teams
+                                    let team = self.data.team(team_name).with_context(|| {
+                                        format!("failed to find team '{team_name}' in teams directory")
+                                    })?;
+                                    let github_teams = team.github_teams(self.data).with_context(|| {
+                                        format!("failed to get GitHub teams for '{team_name}'")
+                                    })?;
+                                    for gh_team in github_teams {
+                                        if gh_team.org == r.org {
+                                            let new_team = v1::RepoTeam {
+                                                name: gh_team.name.to_string(),
+                                                permission: permission.clone(),
+                                            };
+                                            teams.push(new_team);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

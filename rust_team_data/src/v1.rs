@@ -310,6 +310,7 @@ pub enum Bot {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct RepoTeam {
     pub name: String,
+    pub role: Option<String>,
     pub permission: RepoPermission,
 }
 
