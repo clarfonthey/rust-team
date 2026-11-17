@@ -4,7 +4,7 @@ subteam-of = "compiler"
 [people]
 leads = ["RalfJung", "oli-obk"]
 members = ["RalfJung", "oli-obk", "saethlin"]
-alumni = ["solson"]
+alums = ["solson"]
 
 [permissions]
 bors.rust.try = true

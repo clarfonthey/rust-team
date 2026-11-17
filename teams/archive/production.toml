@@ -3,7 +3,7 @@ name = "production"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "aidanhs",
     "aturon",
     "celaus",

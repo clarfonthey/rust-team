@@ -10,7 +10,7 @@ members = [
     "saethlin",
     "joshlf",
 ]
-alumni = ["JakobDegen"]
+alums = ["JakobDegen"]
 
 [website]
 name = "Operational Semantics team"

@@ -315,7 +315,7 @@ impl From<TeamData> for v1::Team {
             subteam_of: None,
             top_level: None,
             members: vec![],
-            alumni: vec![],
+            alums: vec![],
             github: (!gh_teams.is_empty()).then_some(TeamGitHub { teams: gh_teams }),
             website_data: None,
             roles: vec![],

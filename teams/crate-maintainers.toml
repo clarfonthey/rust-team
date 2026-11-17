@@ -28,7 +28,7 @@ members = [
     { github = "thomcc", roles = ["cc-maintainer", "cmake-maintainer"] },
     { github = "workingjubilee", roles = [] },
 ]
-alumni = [
+alums = [
     "carllerche",
     "chansuke",
     "sfackler",

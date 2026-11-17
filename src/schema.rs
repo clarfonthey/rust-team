@@ -355,23 +355,23 @@ impl Team {
             for team in data.teams() {
                 if team.kind != TeamKind::Team
                     || team.name == self.name
-                    // This matches the special alumni team.
-                    || team.is_alumni_team()
+                    // This matches the special alums team.
+                    || team.is_alums_team()
                 {
                     continue;
                 }
                 members.extend(team.members(data)?);
             }
         }
-        if self.is_alumni_team() {
+        if self.is_alums_team() {
             let active_members = data.active_members()?;
-            let alumni = data
+            let alums = data
                 .teams()
                 .chain(data.archived_teams())
-                .flat_map(|t| t.explicit_alumni())
+                .flat_map(|t| t.explicit_alums())
                 .map(|a| a.github.as_str())
                 .filter(|person| !active_members.contains(person));
-            members.extend(alumni);
+            members.extend(alums);
         }
         Ok(members)
     }
@@ -559,8 +559,8 @@ impl Team {
         Ok(result)
     }
 
-    pub(crate) fn is_alumni_team(&self) -> bool {
-        self.people.include_all_alumni
+    pub(crate) fn is_alums_team(&self) -> bool {
+        self.people.include_all_alums
     }
 
     // People explicitly set as members
@@ -568,8 +568,8 @@ impl Team {
         &self.people.members
     }
 
-    pub(crate) fn explicit_alumni(&self) -> &[TeamMember] {
-        self.people.alumni.as_ref().map_or(&[], Vec::as_slice)
+    pub(crate) fn explicit_alums(&self) -> &[TeamMember] {
+        self.people.alums.as_ref().map_or(&[], Vec::as_slice)
     }
 
     pub(crate) fn explicit_leads(&self) -> &[String] {
@@ -606,7 +606,7 @@ impl std::cmp::Ord for GitHubTeam<'_> {
 pub(crate) struct TeamPeople {
     pub leads: Vec<String>,
     pub members: Vec<TeamMember>,
-    pub alumni: Option<Vec<TeamMember>>,
+    pub alums: Option<Vec<TeamMember>>,
     #[serde(default)]
     pub included_teams: Vec<String>,
     #[serde(default = "default_false")]
@@ -618,7 +618,7 @@ pub(crate) struct TeamPeople {
     #[serde(default = "default_false")]
     pub include_all_team_members: bool,
     #[serde(default = "default_false")]
-    pub include_all_alumni: bool,
+    pub include_all_alums: bool,
 }
 
 #[derive(serde::Deserialize, Clone, Debug)]

@@ -4,7 +4,7 @@ subteam-of = "launching-pad"
 [people]
 leads = []
 members = []
-alumni = []
+alums = []
 
 [[lists]]
 address = "web-presence@rust-lang.org"

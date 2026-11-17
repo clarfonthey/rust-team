@@ -22,7 +22,7 @@ pub struct Team {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub top_level: Option<bool>,
     pub members: Vec<TeamMember>,
-    pub alumni: Vec<TeamMember>,
+    pub alums: Vec<TeamMember>,
     pub github: Option<TeamGitHub>,
     pub website_data: Option<TeamWebsite>,
     pub roles: Vec<MemberRole>,

@@ -5,7 +5,7 @@ subteam-of = "lang"
 [people]
 leads = []
 members = []
-alumni = ["jackh726", "nikomatsakis"]
+alums = ["jackh726", "nikomatsakis"]
 
 [website]
 name = "Generic Associated Types Initiative"

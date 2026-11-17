@@ -4,7 +4,7 @@ subteam-of = "devtools"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "alexcrichton",
     "emilio",
     "fitzgen",

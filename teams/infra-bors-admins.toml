@@ -4,7 +4,7 @@ kind = "marker-team"
 [people]
 leads = ["Kobzol"]
 members = ["Kobzol"]
-alumni = []
+alums = []
 
 [[github]]
 orgs = ["rust-lang"]

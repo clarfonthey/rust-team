@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "Manishearth",
     "davidtwco",
     "michaelwoerister",

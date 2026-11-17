@@ -10,7 +10,7 @@ members = [
     "nikomatsakis",
     "BennoLossin"
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Meta-language Dictionary Passing Working Group"

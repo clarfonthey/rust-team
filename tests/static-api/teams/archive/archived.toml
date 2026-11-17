@@ -5,7 +5,7 @@ subteam-of = "foo"
 [people]
 leads = []
 members = []
-alumni = ["user-0", "user-5"]
+alums = ["user-0", "user-5"]
 
 [[roles]]
 id = "convener"

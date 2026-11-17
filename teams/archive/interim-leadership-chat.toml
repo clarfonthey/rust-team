@@ -5,7 +5,7 @@ name = "interim-leadership-chat"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "badboy",
     "cuviper",
     "joshtriplett",

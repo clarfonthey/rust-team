@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = ["nikomatsakis", "davidtwco", "spastorino"]
+alums = ["nikomatsakis", "davidtwco", "spastorino"]
 
 [website]
 name = "Meta working group"

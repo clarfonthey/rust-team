@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     # The following nickname listed here to pass validation
     # see https://github.com/rust-lang/team/pull/992
     "am-1t",

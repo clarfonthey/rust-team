@@ -8,7 +8,7 @@ members = [
     "adamgreig",
     "therealprof",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Embedded core team"

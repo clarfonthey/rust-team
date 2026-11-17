@@ -10,7 +10,7 @@ members = [
     "madsmtm",
     "mati865",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Linkers working area"

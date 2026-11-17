@@ -46,7 +46,7 @@ members = [
     "workingjubilee",
     "yaahc",
 ]
-alumni = [
+alums = [
     "alexcrichton",
     "aturon",
     "brson",

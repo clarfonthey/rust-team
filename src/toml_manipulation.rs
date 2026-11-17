@@ -68,7 +68,7 @@ pub fn archive_repo(data_dir: &Path, name: &str) -> anyhow::Result<()> {
     })
 }
 
-/// Gather every username from a team's `leads`, `members`, and `alumni`
+/// Gather every username from a team's `leads`, `members`, and `alums`
 /// arrays into a single deduplicated, order-preserving set.
 ///
 /// Handles both bare strings (`"alice"`) and inline tables (`{ github = "alice" }`),
@@ -77,7 +77,7 @@ pub fn archive_repo(data_dir: &Path, name: &str) -> anyhow::Result<()> {
 fn collect_all_team_members(people_table: &toml_edit::Table) -> Vec<toml_edit::Value> {
     let mut all = IndexSet::new();
     let mut values = Vec::new();
-    for key in ["leads", "members", "alumni"] {
+    for key in ["leads", "members", "alums"] {
         let Some(arr) = people_table.get(key).and_then(|v| v.as_array()) else {
             continue;
         };
@@ -102,7 +102,7 @@ fn collect_all_team_members(people_table: &toml_edit::Table) -> Vec<toml_edit::V
 
 /// Build a TOML array of usernames laid out one per line with `    ` indentation
 /// and a trailing comma — matching the style used elsewhere in the team repo.
-fn build_alumni_array(values: &[toml_edit::Value]) -> toml_edit::Array {
+fn build_alums_array(values: &[toml_edit::Value]) -> toml_edit::Array {
     let mut arr = toml_edit::Array::new();
     for value in values {
         let mut value = value.clone();
@@ -115,24 +115,24 @@ fn build_alumni_array(values: &[toml_edit::Value]) -> toml_edit::Array {
     arr
 }
 
-/// Move everyone listed in a team's `leads`, `members`, and existing `alumni`
-/// into a single `alumni` array, leaving `leads` and `members` empty.
+/// Move everyone listed in a team's `leads`, `members`, and existing `alums`
+/// into a single `alums` array, leaving `leads` and `members` empty.
 ///
 /// No-op if the document has no `[people]` table.
-fn move_team_members_to_alumni(doc: &mut toml_edit::DocumentMut) {
+fn move_team_members_to_alums(doc: &mut toml_edit::DocumentMut) {
     let Some(people_table) = doc.get_mut("people").and_then(|v| v.as_table_mut()) else {
         return;
     };
 
-    let all_alumni = collect_all_team_members(people_table);
+    let all_alums = collect_all_team_members(people_table);
 
     people_table.insert("leads", toml_edit::Array::new().into());
     people_table.insert("members", toml_edit::Array::new().into());
-    people_table.insert("alumni", build_alumni_array(&all_alumni).into());
+    people_table.insert("alums", build_alums_array(&all_alums).into());
 }
 
 /// Archive a team by moving its TOML file to `teams/archive/`, collapsing
-/// every `leads`/`members`/`alumni` entry into a single `alumni` array,
+/// every `leads`/`members`/`alums` entry into a single `alums` array,
 /// and removing the team from every repo's `[access.teams]` table.
 pub fn archive_team(data_dir: &Path, name: &str) -> anyhow::Result<()> {
     let teams_dir = data_dir.join("teams");
@@ -140,7 +140,7 @@ pub fn archive_team(data_dir: &Path, name: &str) -> anyhow::Result<()> {
     let dest_dir = teams_dir.join("archive");
     let dest = dest_dir.join(format!("{name}.toml"));
 
-    archive_toml_file(&src, &dest_dir, &dest, "team", move_team_members_to_alumni)?;
+    archive_toml_file(&src, &dest_dir, &dest, "team", move_team_members_to_alums)?;
     remove_team_from_repos(data_dir, name)?;
     Ok(())
 }
@@ -198,7 +198,7 @@ fn remove_team_from_repository(team_name: &str, repo_path: &Path) -> anyhow::Res
     Ok(())
 }
 
-pub fn move_person_to_alumni<'a>(
+pub fn move_person_to_alums<'a>(
     data: &'a Data,
     data_dir: &Path,
     username: &str,
@@ -277,13 +277,13 @@ pub fn move_person_to_alumni<'a>(
         };
         let entry = members.remove(index);
 
-        let alumni = people
-            .entry("alumni")
+        let alums = people
+            .entry("alums")
             .or_insert(Item::Value(Value::Array(Array::new())))
             .as_array_mut()
             .unwrap();
-        alumni.push_formatted(entry);
-        *alumni = build_alumni_array(&alumni.iter().cloned().collect::<Vec<_>>());
+        alums.push_formatted(entry);
+        *alums = build_alums_array(&alums.iter().cloned().collect::<Vec<_>>());
 
         std::fs::write(path, document.to_string())?;
     }

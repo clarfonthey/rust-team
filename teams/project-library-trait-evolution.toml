@@ -10,7 +10,7 @@ members = [
     "cramertj",
     "tmandry",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Library Trait Evolution Initiative"

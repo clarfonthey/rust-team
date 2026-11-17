@@ -11,7 +11,7 @@ members = [
     "therealprof",
     "MabezDev",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Embedded HAL team"

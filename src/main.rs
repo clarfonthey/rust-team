@@ -31,7 +31,7 @@ use crate::find_inactive_members::{InactiveTeamFilter, find_inactive_members};
 use crate::schema::RepoPermission;
 use crate::sync::run_sync_team;
 use crate::sync::team_api::TeamApi;
-use crate::toml_manipulation::{archive_repo, archive_team, move_person_to_alumni};
+use crate::toml_manipulation::{archive_repo, archive_team, move_person_to_alums};
 use anyhow::{Context, Error, bail, format_err};
 use api::github;
 use chrono::Utc;
@@ -49,10 +49,10 @@ enum DumpIndividualAccessGroupBy {
 }
 
 #[derive(clap::ValueEnum, Clone, Debug)]
-enum CreateAlumniPr {
-    /// Create the alumni pull request on your behalf.
+enum CreateAlumsPr {
+    /// Create the alums pull request on your behalf.
     Myself,
-    /// Create the alumni pull request of behalf of someone else, who you are moving to alumni
+    /// Create the alums pull request of behalf of someone else, who you are moving to alums
     /// status.
     External,
 }
@@ -135,23 +135,23 @@ enum RootOpts {
         #[arg(long, default_value = "30")]
         cutoff_days: u64,
     },
-    /// Move a person to alumni status
-    MoveToAlumni {
+    /// Move a person to alums
+    MoveToAlums {
         /// GitHub username of the person.
         username: String,
-        /// Subset of teams in which the person should be moved to alumni.
-        /// If not specified, then the person will be moved to alumni in all their teams.
+        /// Subset of teams in which the person should be moved to alums.
+        /// If not specified, then the person will be moved to alums in all their teams.
         #[arg(long, value_delimiter = ',')]
         teams: Vec<String>,
-        /// Create a git commit after moving the person to alumni and then
+        /// Create a git commit after moving the person to alums and then
         /// create a pull request using the `gh` CLI tool.
         ///
         /// You will be redirected to the GitHub web interface to confirm the PR.
         ///
         /// Specify either `myself` or `external`, based on whether you are moving yourself to
-        /// alumni, or if you are moving someone else to alumni.
+        /// alums, or if you are moving someone else to alums.
         #[arg(long)]
-        create_pr: Option<CreateAlumniPr>,
+        create_pr: Option<CreateAlumsPr>,
     },
     /// Encrypt an email address
     EncryptEmail,
@@ -630,13 +630,13 @@ async fn run() -> Result<(), Error> {
             )
             .await?
         }
-        RootOpts::MoveToAlumni {
+        RootOpts::MoveToAlums {
             username,
             teams,
             create_pr,
         } => {
             let specific_teams = !teams.is_empty();
-            let removed_teams = move_person_to_alumni(&data, &cli.data_dir, &username, teams)?;
+            let removed_teams = move_person_to_alums(&data, &cli.data_dir, &username, teams)?;
             if !removed_teams.is_empty()
                 && let Some(create_pr) = create_pr
             {
@@ -651,22 +651,22 @@ async fn run() -> Result<(), Error> {
                 } else {
                     String::new()
                 };
-                let title = format!("Move `{username}` to alumni{title_suffix}");
+                let title = format!("Move `{username}` to alums{title_suffix}");
 
                 let date = Utc::now() + chrono::Duration::days(10);
                 let body = match create_pr {
-                    CreateAlumniPr::Myself => {
+                    CreateAlumsPr::Myself => {
                         format!(
-                            r#"Move myself to alumni{title_suffix}.
+                            r#"Move myself to alums{title_suffix}.
 
-@rustbot label +alumni
+@rustbot label +alums
 "#
                         )
                     }
-                    CreateAlumniPr::External => format!(
+                    CreateAlumsPr::External => format!(
                         r#"{title}, as they have been inactive on GitHub and Zulip for some time. This is in accordance with https://github.com/rust-lang/leadership-council/blob/main/policies/membership/auto-alumni.md.
 
-`{username}` will be moved to alumni in the following team(s):
+`{username}` will be moved to alums in the following team(s):
 {}
 
 This pull request should be left open at least for 10 days (until `{}`) to allow the contributor to respond.
@@ -675,7 +675,7 @@ CC @{username}
 
 If you want to keep being a member of Rust teams, please let us know!
 
-@rustbot label +alumni
+@rustbot label +alums
 "#,
                         removed_teams
                             .iter()

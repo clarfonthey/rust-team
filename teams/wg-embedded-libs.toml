@@ -11,7 +11,7 @@ members = [
     "sgued",
     "zeenix",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Embedded libraries team"

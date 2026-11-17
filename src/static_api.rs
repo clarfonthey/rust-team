@@ -604,7 +604,7 @@ fn convert_teams<'a>(
         for member in team.explicit_members().iter().cloned() {
             website_roles.insert(member.github, member.roles);
         }
-        for alum in team.explicit_alumni().iter().cloned() {
+        for alum in team.explicit_alums().iter().cloned() {
             website_roles.insert(alum.github, alum.roles);
         }
 
@@ -628,10 +628,10 @@ fn convert_teams<'a>(
         members.sort_by_key(|member| member.github.to_lowercase());
         members.sort_by_key(|member| !member.is_lead);
 
-        let mut alumni = Vec::new();
-        for alum in team.explicit_alumni() {
+        let mut alums = Vec::new();
+        for alum in team.explicit_alums() {
             if let Some(person) = data.person(&alum.github) {
-                alumni.push(v1::TeamMember {
+                alums.push(v1::TeamMember {
                     name: person.name().into(),
                     github: alum.github.to_string(),
                     github_id: person.github_id(),
@@ -647,7 +647,7 @@ fn convert_teams<'a>(
                 });
             }
         }
-        alumni.sort_by_key(|member| member.github.to_lowercase());
+        alums.sort_by_key(|member| member.github.to_lowercase());
 
         let mut github_teams = team.github_teams(data)?;
         github_teams.sort();
@@ -663,7 +663,7 @@ fn convert_teams<'a>(
             subteam_of: team.subteam_of().map(|st| st.into()),
             top_level: team.top_level(),
             members,
-            alumni,
+            alums,
             github: Some(v1::TeamGitHub {
                 teams: github_teams
                     .into_iter()

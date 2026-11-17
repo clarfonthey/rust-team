@@ -12,7 +12,7 @@ members = [
     { github = "joboet", roles = ["maintainer-grant"] },
     { github = "Jarcho", roles = ["maintainer-grant"] },
 ]
-alumni = []
+alums = []
 
 [[roles]]
 id = "full-time"

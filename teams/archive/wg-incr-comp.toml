@@ -5,7 +5,7 @@ kind = "marker-team"
 [people]
 leads = []
 members = []
-alumni = ["davidtwco", "wesleywiser", "Aaron1011", "cjgillot", "michaelwoerister", "pierwill", "pnkfelix", "spastorino"]
+alums = ["davidtwco", "wesleywiser", "Aaron1011", "cjgillot", "michaelwoerister", "pierwill", "pnkfelix", "spastorino"]
 
 [[github]]
 orgs = ["rust-lang"]

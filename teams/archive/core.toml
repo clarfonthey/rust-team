@@ -4,7 +4,7 @@ name = "core"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "alexcrichton",
     "aturon",
     "brson",

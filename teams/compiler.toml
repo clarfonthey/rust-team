@@ -84,7 +84,7 @@ members = [
     "Zalathar",
     "ZuseZ4",
 ]
-alumni = [
+alums = [
     { github = "Aaron1011", roles = ["compiler-maintainer"] },
     { github = "Aatch", roles = ["compiler-maintainer"] },
     { github = "arielb1", roles = ["compiler-maintainer"] },

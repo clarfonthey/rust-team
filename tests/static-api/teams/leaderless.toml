@@ -4,7 +4,7 @@ top-level = true
 [people]
 leads = []
 members = ["user-0"]
-alumni = []
+alums = []
 
 [website]
 name = "Leaderless"

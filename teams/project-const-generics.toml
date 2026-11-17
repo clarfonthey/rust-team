@@ -13,7 +13,7 @@ members = [
     "khyperia",
     "bit-aloo",
 ]
-alumni = [
+alums = [
     "compiler-errors",
     "davidtwco",
     "varkor",

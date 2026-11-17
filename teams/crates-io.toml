@@ -11,7 +11,7 @@ members = [
     "mdtro",
     "eth3lbert",
 ]
-alumni = [
+alums = [
     "steveklabnik",
     "ashleygwilliams",
     "withoutboats",

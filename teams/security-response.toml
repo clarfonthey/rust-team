@@ -10,7 +10,7 @@ members = [
     "Mark-Simulacrum",
     "walterhpearce",
 ]
-alumni = [
+alums = [
     "alexcrichton",
     "nikomatsakis",
     "steveklabnik",

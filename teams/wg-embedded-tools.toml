@@ -12,7 +12,7 @@ members = [
     "burrbull",
     "therealprof",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Embedded Tools Team"

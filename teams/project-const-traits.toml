@@ -11,7 +11,7 @@ members = [
     "fmease",
     "oli-obk",
 ]
-alumni = [
+alums = [
     "compiler-errors",
 ]
 

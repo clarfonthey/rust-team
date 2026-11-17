@@ -11,7 +11,7 @@ members = [
     "LaneAsade",
     "reddevilmidzy",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Const Generics Project Group Triage"

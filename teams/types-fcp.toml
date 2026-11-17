@@ -10,7 +10,7 @@ members = [
     "oli-obk",
     "spastorino",
 ]
-alumni = [
+alums = [
     "aliemjay",
     "compiler-errors",
     "nikomatsakis",

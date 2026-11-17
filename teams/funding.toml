@@ -19,7 +19,7 @@ members = [
     "nikomatsakis",
     "PLeVasseur",
 ]
-alumni = []
+alums = []
 
 [[github]]
 team-name = "funding"

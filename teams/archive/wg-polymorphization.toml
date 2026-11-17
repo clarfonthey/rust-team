@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = ["davidtwco", "eddyb", "lcnr"]
+alums = ["davidtwco", "eddyb", "lcnr"]
 
 [website]
 name = "Polymorphization working group"

@@ -11,7 +11,7 @@ members = [
     "apiraino",
     "hashcatHitman",
 ]
-alumni = [
+alums = [
     "Manishearth",
     "nikomatsakis",
     "nrc",

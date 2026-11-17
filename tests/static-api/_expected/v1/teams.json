@@ -1,6 +1,6 @@
 {
-  "alumni": {
-    "name": "alumni",
+  "alums": {
+    "name": "alums",
     "kind": "marker_team",
     "subteam_of": null,
     "members": [
@@ -11,7 +11,7 @@
         "is_lead": false
       }
     ],
-    "alumni": [],
+    "alums": [],
     "github": null,
     "website_data": null,
     "roles": []
@@ -35,7 +35,7 @@
         "is_lead": false
       }
     ],
-    "alumni": [],
+    "alums": [],
     "github": {
       "teams": [
         {
@@ -81,7 +81,7 @@
         "is_lead": false
       }
     ],
-    "alumni": [],
+    "alums": [],
     "github": null,
     "website_data": null,
     "roles": []
@@ -99,7 +99,7 @@
         "is_lead": false
       }
     ],
-    "alumni": [],
+    "alums": [],
     "github": null,
     "website_data": {
       "name": "Leaderless",
@@ -118,7 +118,7 @@
     "kind": "team",
     "subteam_of": null,
     "members": [],
-    "alumni": [],
+    "alums": [],
     "github": null,
     "website_data": {
       "name": "Leadership council",
@@ -157,7 +157,7 @@
         "is_lead": false
       }
     ],
-    "alumni": [],
+    "alums": [],
     "github": null,
     "website_data": {
       "name": "Leads permissions",
@@ -186,7 +186,7 @@
         ]
       }
     ],
-    "alumni": [
+    "alums": [
       {
         "name": "Zeroth user",
         "github": "user-0",

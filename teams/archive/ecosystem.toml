@@ -3,7 +3,7 @@ name = "ecosystem"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "KodrAus",
     "withoutboats",
     "sfackler",

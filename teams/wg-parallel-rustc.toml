@@ -11,7 +11,7 @@ members = [
     "bjorn3",
     "Kobzol",
 ]
-alumni = [
+alums = [
     "Zoxc",
     "nikomatsakis",
     "Mark-Simulacrum",

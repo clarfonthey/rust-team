@@ -7,7 +7,7 @@ members = [
     "Mark-Simulacrum",
     "emilyalbini",
 ]
-alumni = []
+alums = []
 
 [permissions]
 # None currently, created to add this team to crates published as part of

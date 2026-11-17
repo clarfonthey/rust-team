@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = ["nikomatsakis", "pnkfelix", "davidtwco", "spastorino", "matthewjasper", "lqd"]
+alums = ["nikomatsakis", "pnkfelix", "davidtwco", "spastorino", "matthewjasper", "lqd"]
 
 [website]
 name = "Non-Lexical Lifetimes (NLL) working group"

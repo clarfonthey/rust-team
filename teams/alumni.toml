@@ -1,12 +1,12 @@
-# This team is automatically populated with all members listed as alumni in the
+# This team is automatically populated with all members listed as alums in the
 # individual teams, who are not an active member of any team.
 #
-# Do not add new members to this team. Instead add to `people.alumni` in the
+# Do not add new members to this team. Instead add to `people.alums` in the
 # appropriate team's file.
-name = "alumni"
+name = "alums"
 kind = "marker-team"
 
 [people]
 leads = []
 members = []
-include-all-alumni = true
+include-all-alums = true

@@ -41,7 +41,7 @@ static CHECKS: &[Check<fn(&Data, &mut Vec<String>)>] = checks![
     validate_team_members,
     validate_team_gws_group,
     validate_duplicate_team_entries,
-    validate_alumni,
+    validate_alums,
     validate_archived_teams,
     validate_inactive_members,
     validate_list_email_addresses,
@@ -300,8 +300,8 @@ where
     Ok(())
 }
 
-/// Ensure no duplicate entries in team leads, members and alumni
-/// Also ensures that there are no duplicates *across* members and alumni.
+/// Ensure no duplicate entries in team leads, members and alums
+/// Also ensures that there are no duplicates *across* members and alums.
 fn validate_duplicate_team_entries(data: &Data, errors: &mut Vec<String>) {
     wrapper(data.teams(), errors, |team, errors| {
         // Check leads for duplicates
@@ -322,31 +322,31 @@ fn validate_duplicate_team_entries(data: &Data, errors: &mut Vec<String>) {
             errors.push(e.to_string());
         }
 
-        let alumni = || {
-            team.explicit_alumni()
+        let alums = || {
+            team.explicit_alums()
                 .iter()
                 .map(|alum| alum.github.as_str())
         };
 
-        // Check alumni for duplicates
-        if let Err(e) = check_duplicates(team.name(), "alumni", alumni()) {
+        // Check alums for duplicates
+        if let Err(e) = check_duplicates(team.name(), "alums", alums()) {
             errors.push(e.to_string());
         }
 
-        // Check leads + alumni for duplicates
+        // Check leads + alums for duplicates
         if let Err(e) = check_duplicates(
             team.name(),
-            "leads + alumni",
-            alumni().chain(team.explicit_leads().iter().map(|s| s.as_str())),
+            "leads + alums",
+            alums().chain(team.explicit_leads().iter().map(|s| s.as_str())),
         ) {
             errors.push(e.to_string());
         }
 
-        // Check members + alumni for duplicates
+        // Check members + alums for duplicates
         if let Err(e) = check_duplicates(
             team.name(),
-            "members + alumni",
-            alumni().chain(team.explicit_members().iter().map(|s| s.github.as_str())),
+            "members + alums",
+            alums().chain(team.explicit_members().iter().map(|s| s.github.as_str())),
         ) {
             errors.push(e.to_string());
         }
@@ -355,23 +355,23 @@ fn validate_duplicate_team_entries(data: &Data, errors: &mut Vec<String>) {
     });
 }
 
-/// Alumni team must consist only of automatically populated alumni from the other teams
-fn validate_alumni(data: &Data, errors: &mut Vec<String>) {
-    let Some(alumni_team) = data.team("alumni") else {
-        errors.push("cannot find an 'alumni' team".to_owned());
+/// Alums team must consist only of automatically populated alums from the other teams
+fn validate_alums(data: &Data, errors: &mut Vec<String>) {
+    let Some(alums_team) = data.team("alums") else {
+        errors.push("cannot find an 'alums' team".to_owned());
         return;
     };
-    if !alumni_team.explicit_members().is_empty() {
-        errors.push("'alumni' team must not have explicit members; move them to the appropriate team's alumni entry".to_owned());
+    if !alums_team.explicit_members().is_empty() {
+        errors.push("'alums' team must not have explicit members; move them to the appropriate team's alums entry".to_owned());
     }
 
-    // Teams must contain an `alumni = […]` field (even if empty) so that there
+    // Teams must contain an `alums = […]` field (even if empty) so that there
     // is an obvious place to move contributors within the same file when
     // removing from `members`.
     //
     // Marker teams are exempt from this, as well as teams which comprise only
     // members of other teams via `include-team-leads` or similar; they do not
-    // need `alumni = […]`. For these teams, the correct place to put alumni is
+    // need `alums = […]`. For these teams, the correct place to put alums is
     // in the same team they're being included from.
     wrapper(data.teams(), errors, |team, _| {
         // Exhaustive destructuring to ensure this code is touched if a new
@@ -379,16 +379,16 @@ fn validate_alumni(data: &Data, errors: &mut Vec<String>) {
         let TeamPeople {
             leads: _,
             members,
-            alumni,
+            alums,
             included_teams,
             include_team_leads,
             include_wg_leads,
             include_project_group_leads,
             include_all_team_members,
-            include_all_alumni,
+            include_all_alums,
         } = team.raw_people();
 
-        if alumni.is_none() {
+        if alums.is_none() {
             let exempt_team_kind = match team.kind() {
                 TeamKind::MarkerTeam => true,
                 TeamKind::Team | TeamKind::WorkingGroup | TeamKind::ProjectGroup => false,
@@ -398,12 +398,12 @@ fn validate_alumni(data: &Data, errors: &mut Vec<String>) {
                     || *include_wg_leads
                     || *include_project_group_leads
                     || *include_all_team_members
-                    || *include_all_alumni
+                    || *include_all_alums
                     || !included_teams.is_empty());
             let exempt = exempt_team_kind || exempt_composition;
             if !exempt {
                 let team_name = team.name();
-                bail!("team '{team_name}' needs an `alumni = []` entry");
+                bail!("team '{team_name}' needs an `alums = []` entry");
             }
         }
         Ok(())
@@ -414,13 +414,13 @@ fn validate_archived_teams(data: &Data, errors: &mut Vec<String>) {
     wrapper(data.archived_teams(), errors, |team, _| {
         if !team.members(data)?.is_empty() {
             bail!(
-                "archived team '{}' must not have current members; please move members to that team's alumni",
+                "archived team '{}' must not have current members; please move members to that team's alums",
                 team.name()
             );
         }
         if !team.leads().is_empty() {
             bail!(
-                "archived team '{}' must not have team leads; please move members to that team's alumni",
+                "archived team '{}' must not have team leads; please move members to that team's alums",
                 team.name()
             );
         }
@@ -439,7 +439,7 @@ fn validate_inactive_members(data: &Data, errors: &mut Vec<String>) {
             for member in members {
                 referenced_members.insert(member);
             }
-            for person in team.explicit_alumni() {
+            for person in team.explicit_alums() {
                 referenced_members.insert(person.github.as_str());
             }
             for list in team.raw_lists() {

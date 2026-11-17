@@ -5,7 +5,7 @@ subteam-of = "lang"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "lcnr",
     "nikomatsakis",
     "oli-obk",

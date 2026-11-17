@@ -18,7 +18,7 @@ members = [
 included-teams = [
   "foundation-board-project-directors"
 ]
-alumni = []
+alums = []
 
 [[zulip-streams]]
 name = "foundation-board"

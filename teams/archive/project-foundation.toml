@@ -5,7 +5,7 @@ subteam-of = "core"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "Manishearth",
     "ashleygwilliams",
     "joshtriplett",

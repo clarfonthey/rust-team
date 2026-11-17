@@ -9,7 +9,7 @@ members = [
     "lcnr",
     "khyperia",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Assumptions on Binders Project Group"

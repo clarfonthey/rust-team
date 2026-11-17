@@ -4,7 +4,7 @@ subteam-of = "launching-pad"
 [people]
 leads = ["m-ou-se"]
 members = ["m-ou-se"]
-alumni = []
+alums = []
 
 [[github]]
 orgs = ["rust-lang"]

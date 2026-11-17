@@ -11,7 +11,7 @@ members = [
     { github = "oli-obk", roles = ["council-rep-mods"] },
     { github = "Mark-Simulacrum", roles = ["council-rep-libs"] },
 ]
-alumni = [
+alums = [
     "khionu",
     "rylev",
     "carols10cents",

@@ -4,7 +4,7 @@ subteam-of = "types"
 [people]
 leads = ["nikomatsakis"]
 members = ["jackh726", "lqd", "tiif", "nikomatsakis"]
-alumni = []
+alums = []
 
 [website]
 name = "Formality team"

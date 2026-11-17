@@ -13,7 +13,7 @@ members = [
     "ranger-ross",
     "weihanglo",
 ]
-alumni = []
+alums = []
 
 [[github]]
 orgs = ["rust-lang"]

@@ -12,7 +12,7 @@ members = [
     "nikomatsakis",
     "oli-obk",
 ]
-alumni = []
+alums = []
 
 [website]
 name = "Impl Trait Initiative"

@@ -13,7 +13,7 @@ members = [
     "nia-e",
     "Mark-Simulacrum",
 ]
-alumni = []
+alums = []
 
 [rfcbot]
 label = "T-libs"

@@ -6,7 +6,7 @@ subteam-of = "compiler"
 leads = []
 members = []
 
-alumni = [
+alums = [
     "Kobzol",
     "antoyo",
     "davidtwco",

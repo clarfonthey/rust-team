@@ -90,10 +90,10 @@ members = [
 # Past members of the team. They will not be considered as part of the team,
 # but they will be recognized on the website.
 #
-# Most teams are required to have this alumni key, even if its value is an empty
+# Most teams are required to have this alums key, even if its value is an empty
 # array. It is only optional in teams with kind="marker-team", and in teams
 # which comprise only members of other teams via include-team-leads or similar.
-alumni = [
+alums = [
     "buildbot",
 ]
 # Optional, name of other teams whose members will be included as members of this team.
@@ -116,10 +116,10 @@ include-wg-leads = false
 # DO NOT USE, this is intended only for the `project-group-leads` team.
 # Include "project-group-leads" in `included-teams` instead.
 include-project-group-leads = false
-# Include all alumni. Optional, defaults to false.
-# DO NOT USE, this is intended only for the `alumni` team.
-# Include "alumni" in `included-teams` instead.
-include-all-alumni = false
+# Include all alums. Optional, defaults to false.
+# DO NOT USE, this is intended only for the `alums` team.
+# Include "alums" in `included-teams` instead.
+include-all-alums = false
 
 [permissions]
 # Optional, applies to all team members. See the permissions documentation

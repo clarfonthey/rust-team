@@ -3,7 +3,7 @@ name = "docs"
 [people]
 leads = []
 members = []
-alumni = [
+alums = [
     "QuietMisdreavus",
     "frewsxcv",
     "steveklabnik",

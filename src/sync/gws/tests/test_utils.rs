@@ -33,7 +33,7 @@ pub fn normal_team(name: &str, members: Vec<TeamMember>) -> Team {
         website_data: None,
         subteam_of: None,
         top_level: Some(true),
-        alumni: vec![],
+        alums: vec![],
         roles: vec![],
         google_workspace_saml_group: None,
         members,

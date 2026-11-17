@@ -28,7 +28,7 @@ members = [
     "thomcc",
     "workingjubilee",
 ]
-alumni = []
+alums = []
 
 [[github]]
 orgs = ["rust-lang"]

@@ -25,7 +25,7 @@ members = [
     { github = "System625", roles = ["outreachy"] },
     { github = "Sandijigs", roles = ["outreachy"] },
 ]
-alumni = [
+alums = [
     # GSoC
     { github = "d-sonuga", roles = ["gsoc"] },
     { github = "mav3ri3k", roles = ["gsoc"] },

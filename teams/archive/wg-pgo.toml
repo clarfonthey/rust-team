@@ -5,7 +5,7 @@ kind = "working-group"
 [people]
 leads = []
 members = []
-alumni = ["michaelwoerister"]
+alums = ["michaelwoerister"]
 
 [website]
 name = "Profile-guided optimization working group"
